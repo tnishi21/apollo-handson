@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 
 build: ## build develoment
-	if ! [ -f .env ];then cp .env.example .env;fi
+	if ! [ -f .env ];then cp .env.sample .env;fi
 	docker-compose up -d postgres
 	npm install
 	npx prisma migrate dev --preview-feature -n 'First Migration'

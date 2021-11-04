@@ -1,13 +1,15 @@
-const { ApolloServer } = require('apollo-server');
+const fs=require('fs');
+const { ApolloServer, gql } = require('apollo-server');
 const { loadSchemaSync } = require('@graphql-tools/load');
 const { GraphQLFileLoader } = require('@graphql-tools/graphql-file-loader');
+const { join } = require('path');
 
-const schema = loadSchemaSync('./schema.graphql', { loaders: [new GraphQLFileLoader()] });
+const typeDefs = gql(fs.readFileSync(join(__dirname, './schema.graphql'), 'utf8'));
 const resolvers = require('./resolvers')
 const PrismaAPI = require('./datasources/prisma')
 
 const server = new ApolloServer({
-  schema, resolvers, dataSources: () => ({
+  typeDefs, resolvers, dataSources: () => ({
     prisma: new PrismaAPI(),
   }),
 });

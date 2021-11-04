@@ -1,7 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-console.log("DB Initial Inserts")
 
   (async () => {
     const user1 = await prisma.user.create({
